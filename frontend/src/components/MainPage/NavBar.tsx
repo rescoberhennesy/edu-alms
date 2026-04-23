@@ -37,7 +37,7 @@ function NavBar({ onOpenRegister }: NavBarProps) {
               <strong>FAQ</strong>
             </a>
             <button
-              className="nav-login-btn bg-[#e02424] text-white px-6 py-2 rounded-full font-semibold transition-all hover:bg-[#c81e1e] hover:-translate-y-0.5"
+              className="nav-login-btn bg-[#e02424] text-white px-6 border-none py-2 rounded-full font-extrabold transition-all hover:bg-[#c81e1e] hover:-translate-y-0.5"
               onClick={() => setShowLogin(true)}
             >
               Log in

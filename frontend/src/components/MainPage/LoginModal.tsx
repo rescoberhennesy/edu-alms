@@ -108,7 +108,7 @@ function LoginModal({ isOpen, onClose, onSwitchToRegister }: LoginModalProps) {
 
         <div className="login-footer-link">
           Don't have an account?{" "}
-          <button onClick={onSwitchToRegister}>REGISTER</button>
+          <button onClick={onSwitchToRegister}>Register</button>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { supabase } from "./supabaseClient"; // Kept as ./ because both are in src
+import { supabase } from "./supabaseClient";
 import {
   Lock,
   Mail,
@@ -10,7 +10,6 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
-// 1. Define the type for the onBack prop
 interface RegisterProps {
   onBack: () => void;
 }
@@ -51,119 +50,114 @@ export default function Register({ onBack }: RegisterProps) {
   };
 
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100 text-slate-900">
-      {/* Back Button */}
-      <button
-        onClick={onBack}
-        className="flex items-center text-xs text-slate-400 hover:text-blue-600 mb-6 transition-colors font-bold"
-      >
-        <ArrowLeft className="w-3 h-3 mr-1" /> BACK TO HOME
-      </button>
-
-      <h2 className="text-2xl font-bold mb-1 tracking-tight">Create Account</h2>
-      <p className="text-slate-500 text-xs mb-6">
-        Join the ARK Education System
-      </p>
-
-      <form onSubmit={handleRegister} className="space-y-4">
-        <div>
-          <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">
-            Full Name
-          </label>
-          <div className="relative">
-            <User className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
-            <input
-              type="text"
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-              onChange={(e) =>
-                setFormData({ ...formData, fullName: e.target.value })
-              }
-              required
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">
-            Email
-          </label>
-          <div className="relative">
-            <Mail className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
-            <input
-              type="email"
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              required
-            />
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">
-            Password
-          </label>
-          <div className="relative">
-            <Lock className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
-            <input
-              type={showPassword ? "text" : "password"}
-              className="w-full pl-10 pr-10 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
-            >
-              {showPassword ? (
-                <EyeOff className="w-4 h-4" />
-              ) : (
-                <Eye className="w-4 h-4" />
-              )}
-            </button>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold text-slate-500 uppercase mb-1">
-            Confirm Password
-          </label>
-          <div className="relative">
-            <ShieldCheck className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
-            <input
-              type="password"
-              className="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg text-sm outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-              onChange={(e) =>
-                setFormData({ ...formData, confirmPassword: e.target.value })
-              }
-              required
-            />
-          </div>
-        </div>
-
-        <button
-          disabled={loading}
-          className="w-full bg-[#e02424] text-white py-2.5 rounded-lg text-sm font-bold hover:bg-[#c81e1e] transition-all disabled:opacity-50"
-        >
-          {loading ? "CREATING ACCOUNT..." : "REGISTER"}
+    <div className="register-container">
+      <div className="register-card">
+        <button onClick={onBack} className="back-btn">
+          <ArrowLeft size={14} /> BACK TO HOME
         </button>
-      </form>
 
-      {message && (
-        <p
-          className={`mt-4 text-center text-xs font-medium p-2 rounded ${
-            message.includes("Success")
-              ? "bg-blue-50 text-blue-600"
-              : "bg-red-50 text-red-600"
-          }`}
-        >
-          {message}
-        </p>
-      )}
+        <img src="/Ark Logo.png" alt="ARK Logo" className="register-logo" />
+
+        <h2 className="register-title">Create Account</h2>
+        <p className="register-subtitle">Join the ARK Education System</p>
+
+        <form onSubmit={handleRegister} className="register-form">
+          <div className="input-group">
+            <label className="field-label">Full Name</label>
+            <div className="input-with-icon">
+              <User size={18} className="input-icon" />
+              <input
+                type="text"
+                placeholder="Enter your full name"
+                required
+                onChange={(e) =>
+                  setFormData({ ...formData, fullName: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label className="field-label">Email Address</label>
+            <div className="input-with-icon">
+              <Mail size={18} className="input-icon" />
+              <input
+                type="email"
+                placeholder="name@edu.com"
+                required
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label className="field-label">Password</label>
+            <div className="input-with-icon">
+              <Lock size={18} className="input-icon" />
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                required
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "#888",
+                }}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+          </div>
+
+          <div className="input-group">
+            <label className="field-label">Confirm Password</label>
+            <div className="input-with-icon">
+              <ShieldCheck size={18} className="input-icon" />
+              <input
+                type="password"
+                placeholder="••••••••"
+                required
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
+              />
+            </div>
+          </div>
+
+          <button type="submit" disabled={loading} className="register-btn">
+            {loading ? "CREATING ACCOUNT..." : "Register"}
+          </button>
+        </form>
+
+        {message && (
+          <div
+            style={{
+              marginTop: "20px",
+              padding: "10px",
+              borderRadius: "8px",
+              fontSize: "12px",
+              fontWeight: "bold",
+              backgroundColor: message.includes("Success")
+                ? "#f0fdf4"
+                : "#fef2f2",
+              color: message.includes("Success") ? "#16a34a" : "#dc2626",
+              border: `1px solid ${message.includes("Success") ? "#bbf7d0" : "#fecaca"}`,
+            }}
+          >
+            {message}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
