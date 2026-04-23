@@ -1,0 +1,74 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum EnrollmentStatus {
+  PENDING
+  APPROVED
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique // We will validate the .edu domain in the code
+  password     String
+  role         Role          @default(STUDENT)
+  name         String
+  createdAt    DateTime      @default(now())
+  
+  // Relations
+  classesOwned Class[]       @relation("TeacherClasses")
+  enrollments  Enrollment[]
+  logs         ActivityLog[]
+}
+
+model Class {
+  id          String       @id @default(uuid())
+  name        String
+  description String?
+  code        String       @unique // The "Google Classroom" style join code
+  teacherId   String
+  teacher     User         @relation("TeacherClasses", fields: [teacherId], references: [id])
+  
+  materials   Material[]
+  enrollments Enrollment[]
+  createdAt   DateTime     @default(now())
+}
+
+model Enrollment {
+  id        String           @id @default(uuid())
+  studentId String
+  classId   String
+  status    EnrollmentStatus @default(PENDING) // Approval logic
+  
+  student   User             @relation(fields: [studentId], references: [id])
+  class     Class            @relation(fields: [classId], references: [id])
+}
+
+model Material {
+  id        String   @id @default(uuid())
+  title     String
+  fileUrl   String
+  classId   String
+  class     Class    @relation(fields: [classId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  action    String   // e.g., "Created Class", "Submitted Activity"
+  timestamp DateTime @default(now())
+}
