@@ -6,6 +6,7 @@ import Footer from "./components/MainPage/Footer";
 import "./App.css";
 import Register from "./Register";
 import AdminDashboard from "./components/Admin/Dashboard/AdminDashboard";
+import "./index.css";
 
 function App() {
   const [view, setView] = useState("HOME");

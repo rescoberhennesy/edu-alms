@@ -1,156 +1,273 @@
+import { useState } from "react";
 import {
+  Layers,
   LayoutDashboard,
   Users,
   BookOpen,
+  Clock,
   Settings,
   LogOut,
   Bell,
   Search,
-  GraduationCap,
 } from "lucide-react";
+import "./AdminDashboard.css"; // IMPORTANT: Import your new CSS file here
 
-interface AdminDashboardProps {
-  userEmail?: string;
-  onLogout: () => void;
-}
+export default function AdminDashboard({ userEmail, onLogout }: any) {
+  const [activeTab, setActiveTab] = useState("Dashboard");
 
-const AdminDashboard = ({ userEmail, onLogout }: AdminDashboardProps) => {
   return (
-    <div className="flex min-h-screen bg-[#f0f2f5]">
-      {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
-        <div className="p-6 flex items-center gap-3">
-          <img
-            src="/arklogo-removebg-preview.png"
-            alt="Logo"
-            className="h-10 w-auto"
-          />
-          <span className="font-black text-xs tracking-tighter leading-tight">
-            ARK ADMIN
-          </span>
+    <div className="dashboard-container">
+      {/* SIDEBAR */}
+      <aside className="sidebar">
+        <div className="sidebar-header">
+          <div className="logo-box">
+            <Layers className="text-white h-5 w-5" size={20} />
+          </div>
+          <div>
+            <span style={{ fontWeight: 800, fontSize: "18px" }}>
+              ARK System
+            </span>
+            <p style={{ fontSize: "10px", color: "#a1a1aa", margin: 0 }}>
+              ADMIN PORTAL
+            </p>
+          </div>
         </div>
 
-        <nav className="flex-1 px-4 space-y-2 mt-4">
-          <SidebarItem
-            icon={<LayoutDashboard size={20} />}
-            label="Overview"
-            active
-          />
-          <SidebarItem icon={<Users size={20} />} label="Students" />
-          <SidebarItem icon={<BookOpen size={20} />} label="Courses" />
-          <SidebarItem icon={<Settings size={20} />} label="Settings" />
+        <nav className="sidebar-nav">
+          <div className="nav-section">
+            <span className="section-label">Overview</span>
+            <button
+              className={`nav-item ${activeTab === "Dashboard" ? "active" : ""}`}
+              onClick={() => setActiveTab("Dashboard")}
+            >
+              <div className="nav-item-content">
+                <LayoutDashboard size={20} /> Dashboard
+              </div>
+            </button>
+          </div>
+
+          <div className="nav-section">
+            <span className="section-label">Management</span>
+            <button
+              className={`nav-item ${activeTab === "Teachers" ? "active" : ""}`}
+              onClick={() => setActiveTab("Teachers")}
+            >
+              <div className="nav-item-content">
+                <Users size={20} /> Teachers
+              </div>
+              <span className="badge">3</span>
+            </button>
+            <button className="nav-item">
+              <div className="nav-item-content">
+                <Users size={20} /> Students
+              </div>
+            </button>
+            <button className="nav-item">
+              <div className="nav-item-content">
+                <BookOpen size={20} /> Sections
+              </div>
+            </button>
+          </div>
+
+          <div className="nav-section">
+            <span className="section-label">System</span>
+            <button className="nav-item">
+              <div className="nav-item-content">
+                <Clock size={20} /> Logs
+              </div>
+            </button>
+            <button className="nav-item">
+              <div className="nav-item-content">
+                <Settings size={20} /> Settings
+              </div>
+            </button>
+          </div>
         </nav>
 
-        <div className="p-4 border-t border-gray-100">
-          <button
-            onClick={onLogout}
-            className="flex items-center gap-3 w-full p-3 text-red-600 font-bold text-sm hover:bg-red-50 rounded-xl transition-all"
-          >
-            <LogOut size={20} /> Logout
-          </button>
-        </div>
+        <button
+          onClick={onLogout}
+          className="nav-item"
+          style={{ margin: "16px", width: "calc(100% - 32px)" }}
+        >
+          <div className="nav-item-content">
+            <LogOut size={20} /> Sign out
+          </div>
+        </button>
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8">
-          <div className="relative w-96">
-            <Search
-              className="absolute left-3 top-2.5 text-gray-400"
-              size={18}
-            />
-            <input
-              type="text"
-              placeholder="Search data..."
-              className="w-full bg-gray-100 border-none rounded-lg py-2 pl-10 text-sm outline-none focus:ring-2 focus:ring-red-500/20"
-            />
+      {/* MAIN CONTENT */}
+      <main className="main-content">
+        <header className="top-header">
+          <div>
+            <h1 style={{ margin: 0, fontSize: "20px" }}>{activeTab}</h1>
+            <p style={{ margin: 0, fontSize: "12px", color: "#71717a" }}>
+              Institutional Oversight
+            </p>
           </div>
-          <div className="flex items-center gap-4">
-            <Bell className="text-gray-500 cursor-pointer" size={20} />
-            <div className="h-8 w-8 bg-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
-              {userEmail?.[0].toUpperCase() || "A"}
+          <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+            <Bell size={20} color="#a1a1aa" />
+            <div className="admin-profile">
+              <div className="avatar">A</div>
+              <div className="text-left">
+                <p style={{ fontSize: "12px", fontWeight: "bold", margin: 0 }}>
+                  Admin
+                </p>
+                <p style={{ fontSize: "10px", color: "#71717a", margin: 0 }}>
+                  {userEmail}
+                </p>
+              </div>
             </div>
           </div>
         </header>
 
-        {/* Content Area */}
-        <div className="p-8">
-          <h1 className="text-2xl font-extrabold text-gray-800 mb-6">
-            Welcome Back, Admin!
-          </h1>
+        <div className="page-body">
+          {activeTab === "Dashboard" ? (
+            <div className="stat-box" style={{ borderRadius: "40px" }}>
+              <h2
+                style={{
+                  fontSize: "48px",
+                  fontWeight: 900,
+                  margin: "0 0 16px 0",
+                }}
+              >
+                Overview
+              </h2>
+              <div
+                style={{
+                  height: "4px",
+                  width: "60px",
+                  backgroundColor: "#e02424",
+                  marginBottom: "24px",
+                }}
+              ></div>
+              <p style={{ color: "#a1a1aa", fontSize: "18px" }}>
+                Welcome to the ARK Command Center.
+              </p>
+            </div>
+          ) : (
+            <div className="teacher-view">
+              <div className="stats-grid">
+                <div className="stat-box">
+                  <p className="stat-label">Total Teachers</p>
+                  <h4 className="stat-value">24</h4>
+                  <p
+                    style={{
+                      color: "#16a34a",
+                      fontSize: "10px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    +2 this month
+                  </p>
+                </div>
+                <div className="stat-box">
+                  <p className="stat-label">Departments</p>
+                  <h4 className="stat-value">6</h4>
+                </div>
+                <div className="stat-box">
+                  <p className="stat-label">Pending</p>
+                  <h4 className="stat-value">1</h4>
+                  <p
+                    style={{
+                      color: "#f97316",
+                      fontSize: "10px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Needs Attention
+                  </p>
+                </div>
+              </div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <StatCard
-              icon={<Users className="text-blue-600" />}
-              label="Total Students"
-              value="1,284"
-            />
-            <StatCard
-              icon={<GraduationCap className="text-green-600" />}
-              label="Active Courses"
-              value="42"
-            />
-            <StatCard
-              icon={<Bell className="text-orange-600" />}
-              label="New Requests"
-              value="12"
-            />
-          </div>
+              <div className="form-card">
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "32px",
+                  }}
+                >
+                  <h3 style={{ margin: 0 }}>Register new teacher</h3>
+                  <div
+                    style={{
+                      display: "flex",
+                      background: "#111113",
+                      padding: "4px",
+                      borderRadius: "12px",
+                    }}
+                  >
+                    <button
+                      style={{
+                        background: "#18181b",
+                        color: "white",
+                        border: "none",
+                        padding: "6px 12px",
+                        borderRadius: "8px",
+                        fontSize: "11px",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Account info
+                    </button>
+                    <button
+                      style={{
+                        background: "transparent",
+                        color: "#71717a",
+                        border: "none",
+                        padding: "6px 12px",
+                        fontSize: "11px",
+                      }}
+                    >
+                      Credentials
+                    </button>
+                  </div>
+                </div>
 
-          {/* Placeholder for Data Table */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 h-64 flex items-center justify-center border-dashed">
-            <p className="text-gray-400 font-medium italic">
-              Your management tables will appear here...
-            </p>
-          </div>
+                <div className="form-row">
+                  <div className="input-wrapper">
+                    <label>First Name</label>
+                    <input className="styled-input" value="Maria" readOnly />
+                  </div>
+                  <div className="input-wrapper">
+                    <label>Last Name</label>
+                    <input className="styled-input" value="Santos" readOnly />
+                  </div>
+                  <div className="input-wrapper">
+                    <label>Department</label>
+                    <input
+                      className="styled-input"
+                      value="Mathematics"
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: "16px",
+                  }}
+                >
+                  <button
+                    style={{
+                      background: "transparent",
+                      color: "white",
+                      border: "1px solid #27272a",
+                      padding: "12px 24px",
+                      borderRadius: "12px",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Clear
+                  </button>
+                  <button className="btn-primary">+ Create account</button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>
   );
-};
-
-/* Helper Components */
-const SidebarItem = ({
-  icon,
-  label,
-  active = false,
-}: {
-  icon: any;
-  label: string;
-  active?: boolean;
-}) => (
-  <div
-    className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${
-      active
-        ? "bg-red-600 text-white shadow-lg shadow-red-200"
-        : "text-gray-500 hover:bg-gray-100"
-    }`}
-  >
-    {icon}
-    <span className="font-bold text-sm">{label}</span>
-  </div>
-);
-
-const StatCard = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: any;
-  label: string;
-  value: string;
-}) => (
-  <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-    <div className="p-3 bg-gray-50 rounded-xl">{icon}</div>
-    <div>
-      <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-        {label}
-      </p>
-      <p className="text-2xl font-black text-gray-800">{value}</p>
-    </div>
-  </div>
-);
-
-export default AdminDashboard;
+}

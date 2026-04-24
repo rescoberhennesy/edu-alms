@@ -102,7 +102,7 @@ function LoginModal({ isOpen, onClose, onSwitchToRegister }: LoginModalProps) {
           )}
 
           <button className="login-btn" disabled={loading}>
-            {loading ? "Authenticating..." : "Log in"}
+            {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
 
