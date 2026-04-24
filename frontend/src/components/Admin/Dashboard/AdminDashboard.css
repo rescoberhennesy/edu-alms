@@ -230,3 +230,89 @@
 .btn-primary:hover {
   transform: translateY(-2px);
 }
+
+/* Sidebar Mini State */
+.sidebar.collapsed {
+  width: 80px;
+}
+
+.sidebar.collapsed .section-label,
+.sidebar.collapsed .logo-text,
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .badge {
+  display: none;
+}
+
+.sidebar.collapsed .nav-item {
+  justify-content: center;
+  padding: 12px;
+}
+
+.sidebar.collapsed .sidebar-header {
+  justify-content: center;
+  padding: 0;
+}
+
+/* Updated Top Nav */
+.top-header {
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 20px;
+}
+
+.collapse-btn {
+  background: transparent;
+  border: 1px solid #27272a;
+  color: #a1a1aa;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.collapse-btn:hover {
+  background: #27272a;
+  color: white;
+}
+
+/* Stat Cards for Teachers */
+.mini-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.mini-stat-box {
+  background-color: #18181b;
+  padding: 16px 24px;
+  border-radius: 16px;
+  border: 1px solid #27272a;
+}
+
+/* Container for the logo image */
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  width: 70px;
+  height: 100px;
+  object-fit: contain;
+  align-items: center;
+}
+
+/* Adjust the ALMS text size to match the larger logo */
+.logo-text span {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
